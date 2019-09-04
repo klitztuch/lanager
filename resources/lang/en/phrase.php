@@ -45,6 +45,8 @@ return [
     // Achievements
     'achievement-successfully-awarded' => 'You have awarded :user the achievement ":achievement"',
     'achievement-successfully-revoked' => 'You have revoked the achievement ":achievement" from :user',
+    'select-file' => 'Select file',
+    'image-help' => 'Recommended image size is 128x128',
 
     // General purpose
     'no-items-found' => 'No :item found',
@@ -54,7 +56,7 @@ return [
     'item-name-deleted' => ':Item ":name" deleted',
     'are-you-sure-delete' => 'Are you sure you want to delete this?',
     'item-created-successfully' => ':Item created successfully',
-    'item-not-found' => ':item not found!',
+    'item-not-found' => ':item not found',
     'item-already-exists' => ':item already exists!',
 
     /**
@@ -77,6 +79,7 @@ return [
     'you-have-no-games-in-common-with-username' => 'You have no games in common with :username',
     'username-does-not-own-any-games' => ':username does not own any games',
     'usernames-game-details-are-private' => ':username\'s game details are private, so we can\'t show you the games they own or have in common with you',
+    'username-has-not-picked-any-games' => ':username has not picked any games',
     'viewing-user-from-another-lan' => 'This user is not attending the current LAN',
     'username-has-not-played-any-games-this-lan' => ':username has not played any games this LAN',
     'played-for-x' => 'Played for :x',
@@ -91,8 +94,16 @@ return [
     'x-in-game' => ':x In Game',
     'x-played-recently' => ':x Played recently',
     'x-owners' => ':x Owners',
-    'view-game-in-steam-store' => 'View :game in the Steam Store',
     'logo-for-game' => 'Logo for :game',
+    'unsupported-provider' => 'Unsupported provider',
+    'game-already-picked' => 'Game already picked',
+    'lan-attendee-game-picks-user-help' => 'Add the games you’d like to play, and find people to play with in the list below.',
+    'lan-attendee-game-picks-guest-help' => 'Log in to add the games you’d like to play.',
+    'add-game-to-lan-picks' => 'Add :game to your picks for this LAN',
+    'remove-game-from-lan-picks' => 'Remove :game from your picks for this LAN',
+    'only-show-my-game-picks' => 'Only show my game picks',
+    'show-everyones-game-picks' => 'Show everyone\'s game picks',
+    'no-game-picks-to-show' => 'No game picks to show',
 
     // Guides
     'markdown-formatting-help-link' => 'Markdown formatting help',
@@ -106,6 +117,7 @@ return [
 
     // LANs
     'lans-cannot-overlap' => 'LANs cannot overlap',
+    'lan-achievement-help' => 'The achievement to award to attendees when they sign in at the LAN',
 
     // Events
     'you-must-create-a-lan-before-creating-events' => 'You must create a LAN before creating events',
@@ -149,12 +161,38 @@ return [
     'unable-to-update-data-for-user-x' => 'Unable to update data for user :x - :error',
 
     // lanager:update-steam-apps
-    'update-database-with-apps-from-steam' => 'Update the database with the latest list of apps from Steam',
-    'requesting-details-of-all-apps-from-steam' => 'Requesting details of all apps from Steam',
-    'adding-x-steam-apps-to-db' => 'Adding :x apps to the database',
-    'updating-x-steam-apps-already-in-db-and-adding-y-new' => 'Updating :x existing apps, and adding :y new apps',
-    'steam-app-update-complete-x-added' => 'Steam app update complete - :x apps added',
-    'steam-app-update-complete-x-updates-y-new' => 'Steam app update complete - :x updates, of which :y were new apps',
+    'update-steam-apps' => 'Update the database with the latest list of apps from Steam',
+    'requesting-list-of-all-apps-from-steam-api' => 'Requesting list of all apps from Steam API',
+    'importing-x-steam-apps' => 'Importing :x apps',
+
+
+    // lanager:update-steam-apps-metadata
+    'update-steam-apps-metadata' => 'Update Steam apps in the database with the latest metadata from Steam',
+    'update-all-apps' => 'Update all apps, not just apps missing metadata',
+    'steam-app-metadata-up-to-date' => 'Steam app metadata already up-to-date',
+    'requesting-metadata-for-x-apps-from-steam-api' => 'Requesting metadata for :x apps from Steam API',
+    'this-will-take-approximately-time-to-complete' => 'This will take approximately :time to complete, due to Steam API rate limiting',
+    'error-updating-metadata-for-steam-app-id-message' => 'Error updating metadata for Steam app with ID :id - :message',
+    'x-steam-apps-not-updated-re-run-command' => ':x Steam apps could not be updated - please re-run the command',
+
+    // lanager:import-steam-apps-csv
+    'import-steam-apps-csv' => 'Import from steam_apps.csv',
+    'csv-not-found-aborting' => 'steam_apps.csv not found - aborting',
+
+    // lanager:export-steam-apps-csv
+    'export-steam-apps-csv' => 'Export to steam_apps.csv',
+    'overwrite-existing-csv' => 'Overwrite existing steam_apps.csv?',
+    'x-steam-apps-exported' => ':x Steam apps exported',
+
+    // Used by:
+    // lanager:update-steam-apps
+    // lanager:import-steam-apps-csv
+    // lanager:export-steam-apps-csv
+    'database-empty-batch-import' => 'Database empty - performing batch import',
+    'database-empty-aborting' => 'Database empty - aborting',
+    'x-steam-apps-imported' => ':x Steam apps imported',
+    'updating-x-steam-apps' => 'Updating :x Steam apps',
+    'x-steam-apps-updated' => ':x Steam apps updated',
 
     // lanager:import-steam-users
     'steamids-to-import-list-or-file' => 'One or more SteamId64(s) for the user(s) to import, or a file containing a list of IDs',
@@ -216,6 +254,7 @@ return [
 
     // Slides
     'slides-content-placeholder' => 'Markdown-formatted text, a single image, or a URL to embed',
-    'slides-content-help' => 'Content will be horizontally centered, increased in size, and scaled to fit the screen'
+    'slides-content-help' => 'Content will be horizontally centered, increased in size, and scaled to fit the screen',
+    'slides-start-end-help' => 'Optionally set when the slide should be displayed'
 ];
 

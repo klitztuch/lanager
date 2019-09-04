@@ -3,6 +3,7 @@
 namespace Zeropingheroes\Lanager\Http\Controllers;
 
 use Illuminate\Support\Facades\View;
+use Zeropingheroes\Lanager\Achievement;
 use Zeropingheroes\Lanager\Lan;
 use Illuminate\Http\Request;
 use Zeropingheroes\Lanager\Requests\StoreLanRequest;
@@ -21,10 +22,9 @@ class LanController extends Controller
         $lans = Lan::orderBy('start', 'desc')
             ->get();
 
-        // Get the LAN happening now, or the most recently ended LAN
-        $currentLan = Lan::presentAndPast()
-            ->orderBy('start', 'desc')
-            ->first();
+        $currentLan = Lan::happeningNow()->first()                      // LAN happening now
+                   ?? Lan::future()->orderBy('start', 'asc')->first()   // Closest future LAN
+                   ?? Lan::past()->orderBy('end', 'desc')->first();     // Most recently ended past LAN
 
         return View::make('pages.lans.index')
             ->with('lans', $lans)
@@ -42,6 +42,7 @@ class LanController extends Controller
 
         return View::make('pages.lans.create')
             ->with('venues', Venue::orderBy('name')->get())
+            ->with('achievements', Achievement::orderBy('name')->get())
             ->with('lan', new Lan);
     }
 
@@ -50,34 +51,13 @@ class LanController extends Controller
      *
      * @param Lan $lan
      * @return \Illuminate\Contracts\View\View
-     * @internal param \Zeropingheroes\Lanager\Log $log
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Lan $lan)
     {
         $this->authorize('view', $lan);
 
-        $lan->load(
-            [
-                'users' => function ($query) {
-                    $query->orderBy('users.username', 'asc');
-                },
-                'events' => function ($query) {
-                    $query->orderBy('events.start', 'asc');
-                },
-                'guides' => function ($query) {
-                    $query->orderBy('guides.title', 'asc');
-                },
-                'slides' => function ($query) {
-                    $query->orderBy('slides.position', 'asc');
-                },
-            ]
-        );
-
-        $games = (new GetGamesPlayedBetweenService($lan->start, $lan->end))->get()->take(10);
-
-        return View::make('pages.lans.show')
-            ->with('games', $games)
-            ->with('lan', $lan);
+        return redirect()->route('lans.attendee-game-picks.index', $lan);
     }
 
     /**
@@ -97,6 +77,7 @@ class LanController extends Controller
             'start' => $httpRequest->input('start'),
             'end' => $httpRequest->input('end'),
             'venue_id' => $httpRequest->input('venue_id'),
+            'achievement_id' => $httpRequest->input('achievement_id'),
             'published' => $httpRequest->has('published'),
         ];
 
@@ -126,6 +107,7 @@ class LanController extends Controller
 
         return View::make('pages.lans.edit')
             ->with('venues', Venue::orderBy('name')->get())
+            ->with('achievements', Achievement::orderBy('name')->get())
             ->with('lan', $lan);
     }
 
@@ -147,6 +129,7 @@ class LanController extends Controller
             'start' => $httpRequest->input('start'),
             'end' => $httpRequest->input('end'),
             'venue_id' => $httpRequest->input('venue_id'),
+            'achievement_id' => $httpRequest->input('achievement_id'),
             'published' => $httpRequest->has('published'),
             'id' => $lan->id,
         ];

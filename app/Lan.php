@@ -9,6 +9,7 @@ class Lan extends Model
 {
     protected $fillable = [
         'venue_id',
+        'achievement_id',
         'name',
         'description',
         'start',
@@ -102,10 +103,26 @@ class Lan extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function attendanceAchievement()
+    {
+        return $this->hasOne('Zeropingheroes\Lanager\Achievement', 'id', 'achievement_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function slides()
     {
         return $this->hasMany('Zeropingheroes\Lanager\Slide');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attendeeGamePicks()
+    {
+        return $this->hasMany('Zeropingheroes\Lanager\LanAttendeeGamePick');
     }
 }

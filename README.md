@@ -127,7 +127,7 @@ your events you can easily update the site and prepare for your next LAN, and yo
 8. Install LANager's dependencies:
 
     ```
-    composer install --working-dir=/var/www/lanager
+    composer install --no-dev --working-dir=/var/www/lanager
     ```
 
 9. Configure LANager:
@@ -149,7 +149,10 @@ your events you can easily update the site and prepare for your next LAN, and yo
     php artisan migrate:fresh
     php artisan db:seed
     php artisan storage:link
+    php artisan lanager:import-steam-apps-csv
     php artisan lanager:update-steam-apps
+    php artisan lanager:update-steam-apps-metadata
+    php artisan config:cache
     ```
 
 11. Visit the app URL to check that the installation was successful

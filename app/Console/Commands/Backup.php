@@ -32,7 +32,7 @@ class Backup extends Command
         $database = env('DB_DATABASE');
         $imagesDir = base_path() . '/storage/app/public/images';
         $outputDir = $this->argument('output-dir');
-        $commitHash = trim(exec('git log --pretty="%h" -n1 HEAD'));
+        $commitHash = trim(exec('cd '.base_path().' && /usr/bin/git log --pretty="%h" -n1 HEAD'));
         $filename = 'lanager-backup-' . date('Y-m-d_H-i-s') . '-git-hash-' . $commitHash;
 
         if (!is_writable($outputDir)) {
@@ -47,7 +47,7 @@ class Backup extends Command
 
         // TODO: Use Laravel's filesystem class to get the files
         $processes["cp-images"] = new Process(
-            "cp $imagesDir/* $outputDir/tmp/images/"
+            "cp -r $imagesDir/* $outputDir/tmp/images/"
         );
 
         // Get all tables in database
@@ -62,7 +62,7 @@ class Backup extends Command
             // steam_apps - will be restored from Steam API
             // logs - often very large
             // sessions - temporary
-            if (Str::contains($table, ['migrations', 'steam_apps', 'logs', 'sessions', 'phpdebugbar'])) {
+            if (in_array($table,['migrations', 'steam_apps', 'logs', 'sessions', 'phpdebugbar'])) {
                 continue;
             }
             $processes["mysqldump-$table"] = new Process(

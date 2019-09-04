@@ -28,9 +28,9 @@ class RestoreBackup extends Command
      */
     public function handle()
     {
-        $username = env('DB_USERNAME');
-        $password = env('DB_PASSWORD');
-        $database = env('DB_DATABASE');
+        $username = config('database.connections.mysql.username');
+        $password = config('database.connections.mysql.password');
+        $database = config('database.connections.mysql.database');
         $imagesDir = base_path() . '/storage/app/public/images';
         $backupFile = $this->argument('backup-file');
         $restoreDir = '/tmp/lanager-backup-restore-' . date('Y-m-d_H-i-s');
@@ -57,7 +57,7 @@ class RestoreBackup extends Command
         $this->call('migrate:fresh');
 
         // Import Steam apps
-        $this->call('lanager:update-steam-apps');
+        $this->call('lanager:import-steam-apps-csv');
 
         // Create a temporary restore directory
         $processes["mkdir-$restoreDir"] = new Process(
@@ -76,7 +76,7 @@ class RestoreBackup extends Command
 
         // Restore images
         $processes["cp-images"] = new Process(
-            "cp $restoreDir/images/* $imagesDir"
+            "cp -r $restoreDir/images/* $imagesDir"
         );
 
         // Restore database dump files
@@ -92,6 +92,7 @@ class RestoreBackup extends Command
 
         // Run the defined processes in turn
         foreach ($processes as $process) {
+            $process->setTimeout(300);
             $process->run(
                 function ($type, $buffer) {
                     if (Process::ERR === $type) {

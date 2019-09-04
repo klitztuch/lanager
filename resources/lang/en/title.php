@@ -37,6 +37,7 @@ return [
     'description' => 'Description',
     'copy-markdown-link' => 'Copy Markdown Link',
     'fullscreen' => 'Fullscreen',
+    'elapsed' => 'elapsed',
 
     // CRUD
     'create-item' => 'Create :Item',
@@ -105,6 +106,7 @@ return [
 
     // Games
     'games' => 'Games',
+    'game' => 'Game',
     'games-in-progress' => 'Games In Progress',
     'in-progress' => 'In Progress',
     'recently-played-games' => 'Recently Played Games',
@@ -115,6 +117,8 @@ return [
     'games-in-common' => 'Games In Common',
     'games-history' => 'Games History',
     'popular-games' => 'Popular Games',
+    'game-picks' => 'Game Picks',
+
 
     // Navigation Links
     'navigation-link' => 'Navigation Link',
@@ -133,6 +137,7 @@ return [
     'x-hours' => ':x hours',
     'attendees' => 'Attendees',
     'attendee' => 'Attendee',
+    'lan-achievement' => 'Achievement',
 
     // Images
     'images' => 'Images',
@@ -148,6 +153,7 @@ return [
     'achievement' => 'Achievement',
     'award-an-achievement' => 'Award an Achievement',
     'award' => 'Award',
+    'image' => 'Achievement Image',
 
     // Venues
     'venues' => 'Venues',
@@ -160,4 +166,10 @@ return [
     'slide' => 'Slide',
     'duration' => 'Duration',
     'play' => 'Play',
+    'active' => 'Active',
+
+    // Whitelisted IP Ranges
+    'whitelisted-ip-ranges' => 'Whitelisted IP Ranges',
+    'whitelisted-ip-range' => 'Whitelisted IP Range',
+    'ip-range' => 'IP Range',
 ];
