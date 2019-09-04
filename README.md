@@ -92,15 +92,15 @@ your events you can easily update the site and prepare for your next LAN, and yo
 4. Enable the site:
 
     ```bash
-    rm /etc/nginx/sites-enabled/default
-    ln -s /etc/nginx/sites-available/lanager /etc/nginx/sites-enabled/lanager
-    nginx -s reload
+    sudo rm /etc/nginx/sites-enabled/default
+    sudo ln -s /etc/nginx/sites-available/lanager /etc/nginx/sites-enabled/lanager
+    sudo nginx -s reload
     ```
 
 5. Configure MySQL:
 
     ```bash
-    mysql
+    sudo mysql
     ```
     
     ```
